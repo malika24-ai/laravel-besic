@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class DepartmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('student.index', [
-            'title' => 'Student',
-            'students' => Student::latest()->get(),
+        return view('department.index', [
+            'title' => 'Department',
+            'departments' => Department::latest()->get(),
         ]);
     }
 
@@ -23,7 +23,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('student.create', ['title' => 'Create Student']);
+        return view('department.create', ['title' => 'Create Department']);
     }
 
     /**
@@ -43,16 +43,14 @@ class StudentController extends Controller
 
     ]);
 
-    Student::create($validated);
-    return to_route('student.index')->withSuccess('Data berhasil ditambahkan');
-    
-
+    Department::create($validated);
+    return to_route('department.index')->withSuccess('Data berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(Department $department)
     {
         //
     }
@@ -60,18 +58,18 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit(Department $department)
     {
-        return view('student.edit', [
-            'title' => 'EditStudent',
-            'student' =>  $student,
+            return view('department.edit', [
+            'title' => 'Edit Department',
+            'department' =>  $department,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Department $department)
     {
         $validated = $request->validate([
         'name' => 'required|max:255',
@@ -85,16 +83,16 @@ class StudentController extends Controller
 
     ]);
 
-    $student->update($validated);
-    return to_route('student.index')->withSuccess('Data berhasil diubah');
+    $department->update($validated);
+    return to_route('department.index')->withSuccess('Data berhasil diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(Department $department)
     {
-        $student->delete($student);
-        return to_route('student.index')->withSuccess('Data berhasil dihapus');
+        $department->delete($department);
+        return to_route('department.index')->withSuccess('Data berhasil dihapus');
     }
 }

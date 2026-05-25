@@ -3,30 +3,59 @@
     <x-slot:title>{{ $title }}</x-slot>
 
     @session('success')
-    <div class="alert alert-success" role="alert">
-        {{ session('success') }}
-    </div>
-@endsession
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+    @endsession
 
-<a class="btn btn-primary mb-3" href="{{ route ('lecturer.create') }}" role="button">Create</a>
+    <a class="btn btn-primary mb-3" href="{{ route('lecturer.create') }}" role="button">Create</a>
+
+    <form action="">
+        <div class="row g-3 mb-3">
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="kyword" name="keyword"
+                    placeholder="Search lecturer name ...." value="{{ old('keyword') }}">
+
+            </div>
+            <div class="col-md-4">
+
+                <select class="form-select" id="department_id" name="department_id" value=" {{ old('department_id') }}">
+                    <option value="">All Department</option>
+                    @foreach ($departments as $department)
+                        <option value={{ $department->id }}.
+                            {{ old('department_id') == $department->id ? 'selected' : '' }} -- {{ $department->name }}>
+                        </option>
+                    @endforeach
+                </select>
+
+            </div>
+
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success mb-3">Search</button>
+
+            </div>
+        </div>
+    </form>
 
     <ul class="list-group">
         @foreach ($lecturers as $lecturer)
-            <li class="list-group-item">{{ $loop->iteration }}--{{ $lecturer->name }}--
-                {{ $lecturer->department->name}}
-                <a class="btn btn-warning btn-sm " href="{{ route ('lecturer.edit',$lecturer) }}" 
-                role="button">edit</a>
-                <form action="{{ route ('lecturer.destroy',$lecturer) }}" method="POST" class="d-inline" >
-    @method('DELETE')
-    @csrf
+            <li class="list-group-item">
+                {{ $lecturers->firstItem() + $loop->index }}. {{ $lecturer->name }}--
+                {{ $lecturer->department->name }}
+                <a class="btn btn-warning btn-sm " href="{{ route('lecturer.edit', $lecturer) }}"
+                    role="button">edit</a>
+                <form action="{{ route('lecturer.destroy', $lecturer) }}" method="POST" class="d-inline">
+                    @method('DELETE')
+                    @csrf
 
-    <button type="submit" class="btn btn-danger" onclick="return confirm('Anda yakin')">Delete</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Anda yakin')">Delete</button>
 
-</form>
+                </form>
 
             </li>
         @endforeach
     </ul>
 
-</x-app>
+    {{ $lecturers->links() }}
 
+</x-app>

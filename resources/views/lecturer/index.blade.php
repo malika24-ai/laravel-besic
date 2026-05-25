@@ -22,8 +22,9 @@
                 <select class="form-select" id="department_id" name="department_id" value=" {{ old('department_id') }}">
                     <option value="">All Department</option>
                     @foreach ($departments as $department)
-                        <option value={{ $department->id }}.
-                            {{ old('department_id') == $department->id ? 'selected' : '' }} -- {{ $department->name }}>
+                        <option value={{ $department->id }}
+                            {{ old('department_id') == $department->id ? 'selected' : '' }}>
+                            {{ $department->name }}
                         </option>
                     @endforeach
                 </select>

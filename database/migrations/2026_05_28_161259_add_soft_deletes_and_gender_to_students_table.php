@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organization_leaders', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('organization_id')->constrained()->cascadeOnDelete();
-            $table->string('leader_name');
-            $table->timestamps();
+        Schema::table('students', function (Blueprint $table) {
+            $table->enum('gender', ['Male', 'Female'])->default('Male');
+            $table->softDeletes();
         });
     }
 
@@ -24,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('organization_leaders');
+        Schema::table('students', function (Blueprint $table) {
+            $table->dropColumn('gender');
+            $table->dropSoftDeletes();
+        });
     }
 };

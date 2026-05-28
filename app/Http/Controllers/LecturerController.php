@@ -14,11 +14,11 @@ class LecturerController extends Controller
     public function index()
     {
 
-        $lecturers = Lecturer::latest()->filter(request(['keyword', 'department_id']));
+        $lecturers = Lecturer::query()->latest()->filter(request(['keyword', 'department_id']));
 
         return view('lecturer.index', [
             'title' => 'Lecturer',
-            'departments' => Department::latest()->get(),
+            'departments' => Department::query()->latest()->get(),
             'lecturers' => $lecturers->latest()->paginate(5)->withQueryString(),
         ]);
     }
@@ -30,7 +30,7 @@ class LecturerController extends Controller
     {
         return view('lecturer.create', [
             'title' => 'Create Lecturer',
-            'departments' => Department::latest()->get(),
+            'departments' => Department::query()->latest()->get(),
             
         ]);
     }
@@ -71,7 +71,7 @@ class LecturerController extends Controller
     {
             return view('lecturer.edit', [
             'title' => 'Edit Lecturer',
-            'departments' => Department::latest()->get(),
+            'departments' => Department::query()->latest()->get(),
             'lecturer' => $lecturer,
         ]);
     }

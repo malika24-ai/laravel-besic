@@ -14,7 +14,7 @@ class DepartmentController extends Controller
     {
         return view('department.index', [
             'title' => 'Department',
-            'departments' => Department::latest()->get(),
+            'departments' => Department::query()->latest()->get(),
         ]);
     }
 
